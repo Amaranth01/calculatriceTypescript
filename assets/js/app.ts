@@ -1,29 +1,63 @@
+import '../css/style.scss'
 
 let buttonNumber: HTMLCollectionOf<HTMLButtonElement> = document.getElementsByClassName("buttonNumber") as HTMLCollectionOf<HTMLButtonElement>;
 let input : HTMLInputElement = document.getElementById('output') as HTMLInputElement;
 let buttonOperande :HTMLCollectionOf<HTMLButtonElement> = document.getElementsByClassName("operande") as HTMLCollectionOf<HTMLButtonElement>;
 let buttonEgal: HTMLButtonElement = document.getElementById('calcul') as HTMLButtonElement;
 let buttonPoint: HTMLButtonElement = document.getElementById('comma')as HTMLButtonElement;
+let number1: number;
+let number2: number;
+let operand: string;
 
 for(let i = 0; i < buttonNumber.length; i++) {
     buttonNumber[i].addEventListener('click', function () {
         let value: string = this.innerText;
+        let temp: number = parseInt(value);
         if(value.length > 0 ) {
-            const result: number = parseInt(value);
-            input.innerHTML += result.toString();
+            input.innerHTML += temp.toString();
         }
     });
 }
 
 for(let i = 0; i < buttonOperande.length; i++) {
     buttonOperande[i].addEventListener('click', function () {
-        input.innerHTML += this.innerText;
+        number1 = parseInt(input.innerHTML);
+        operand = this.innerText;
+        input.innerHTML ="";
+        console.log(operand);
     });
 }
 
-buttonEgal.addEventListener('click', function () {
-    input.innerHTML = eval(input.innerHTML);
-});
+function calcul() {
+    let multi: HTMLButtonElement = document.getElementById('multi') as HTMLButtonElement;
+    let less: HTMLButtonElement = document.getElementById('less') as HTMLButtonElement;
+    let more: HTMLButtonElement = document.getElementById('more') as HTMLButtonElement;
+    let divide: HTMLButtonElement = document.getElementById('divide') as HTMLButtonElement;
+
+    input.value = "";
+
+    buttonEgal.addEventListener('click', function () {
+        number2 = parseInt(input.innerHTML);
+        switch (operand) {
+            case '*' :
+                input.innerHTML = (number1 * number2).toString();
+                break;
+            case '-' :
+                input.innerHTML = (number1 - number2).toString();
+                break;
+            case '+' :
+                input.innerHTML = (number1 + number2).toString();
+                break;
+            case '/' :
+                input.innerHTML = (number1 / number2).toString();
+                break;
+            default :
+                alert('erreur dans le calcul');
+        }
+    });
+}
+
+calcul();
 
 buttonPoint.addEventListener('click', function () {
     let dataPoint = buttonPoint.innerHTML;
